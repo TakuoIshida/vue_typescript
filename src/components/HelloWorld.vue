@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <!-- {{ }}でscript内で定義した値を受け取れる -->
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
@@ -115,11 +116,13 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class HelloWorld extends Vue {
+  // Homeコンポネントからmsg propsを受け取る（！で必ず受け取ることを明示、？ならnullを許容するという意味。）
   @Prop() private msg!: string;
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- !!!BEMの記法で書くこと!!!-->
 <style scoped>
 h3 {
   margin: 40px 0 0;

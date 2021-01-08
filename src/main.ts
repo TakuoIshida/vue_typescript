@@ -3,7 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-Vue.config.productionTip = false;
+// 開発中はtrueにする（エラーなどのコンソール情報を多く吐き出すため）
+Vue.config.productionTip = true;
 
 new Vue({
   router,
