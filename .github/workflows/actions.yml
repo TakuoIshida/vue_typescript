@@ -36,4 +36,4 @@ jobs:
       
       run: |
         npm run build
-        ./ossutil64 --config-file .ossutilconfig cp ${{ github.workspace }} oss://${OSS_BUCKET_NAME} -r -f
+        ./ossutil64 --config-file .ossutilconfig cp ${{ github.workspace }}/dist oss://${OSS_BUCKET_NAME} -r -f
