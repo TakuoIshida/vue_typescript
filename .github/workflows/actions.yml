@@ -5,7 +5,11 @@ on:
       - develop
       - feature/*
 
-env:  
+env:
+  OSS_BUCKET_NAME: ${{secrets.OSS_BUCKET_NAME}}
+  OSS_ENDPOINT: ${{secrets.OSS_ENDPOINT}}
+  ACCESS_KEY: ${{secrets.ACCESS_KEY}}
+  ACCESS_KEY_SECRET: ${{secrets.ACCESS_KEY_SECRET}}
   NODE_VERSION: '14.x'
   
 jobs:
@@ -24,3 +28,12 @@ jobs:
         npm install
         npm run build --if-present
         npm run test --if-present
+    - name: Install Alibaba Cloud OSSUTIL
+      run: wget http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 && chmod +x ossutil64
+    - name: Configure Alibaba Cloud OSSUTIL
+      run: ./ossutil64 config -i ${ACCESS_KEY} -k ${ACCESS_KEY_SECRET} -e ${OSS_ENDPOINT} -c .ossutilconfig
+    - name: Upload the web folder to the chosen OSS bucket
+      
+      run: |
+        npm run build
+        ./ossutil64 --config-file .ossutilconfig cp ${{ github.workspace }}/dist oss://${OSS_BUCKET_NAME} -r -f
